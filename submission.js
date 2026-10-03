@@ -1,82 +1,109 @@
-// Inputs: birthYear is a positive integer Number (<= 2026) or a String of digits.
-function printAgeIn2026(birthYear){
-    let age = 2026 - birthYear;
+//TASK 1
+let even_predicate = function (value)
+{
+    if (value === null || value === undefined)
+    {
+        return false;
+    }
 
-    // Don't modify these lines.
-    console.log("This person will turn " + age + " in 2026.")
-    return age;
-}
+    let numberValue = Number(value);
 
-// Inputs: age is a positive integer Number or a String of digits.
-function printAgeIn10Years(age){
-    let newAge = Number(age) + 10;
+    return Number.isFinite(numberValue) &&
+           Number.isInteger(numberValue) &&
+           numberValue % 2 === 0;
+};
 
-    // Don't modify these lines.
-    console.log("This person will be " + newAge + " in 10 years.")
-    return newAge;
-}
+let odd_predicate = function (value)
+{
+    if (value === null || value === undefined)
+    {
+        return false;
+    }
 
-// Input: String or Number representing an integer.
-function checkIfAdult(age){
-    let isAdult = Number(age) >= 18;
+    let numberValue = Number(value);
 
-    // Leave this part. We haven't learned this syntax yet, but
-    // this statement will print "The person is not an adult." if isAdult is False,
-    // and "The person is an Adult" if isAdult is true.
-    console.log("The person is " + (isAdult ? "" : "not")  + " adult.")
-    return isAdult;
-}
+    if (!Number.isFinite(numberValue) || !Number.isInteger(numberValue))
+    {
+        return false;
+    }
 
-// Input: any value; returns true only for the Number 0, not "0", null, or undefined.
-function checkIfZero(number){
-    let isZero = number === 0;
+    // Numbers must be odd, while strings must be even.
+    if (typeof value === "number")
+    {
+        return numberValue % 2 !== 0;
+    }
 
-    // Leave this part. We haven't learned this syntax yet, but
-    // this statement will print "The input is not zero." if isZero is False,
-    // and "The input is zero" if isZero is true.
-    console.log("The input is " + (isZero ? "" : "not")  + " 0.")
-    return isZero;
-}
+    return numberValue % 2 === 0;
+};
 
-// Input: first input is a non-empty String; second input is a Number that is not NaN.
-function checkIfEquivalent(string, number){
-    let isEquivalent = string == number;
+let undefined_predicate = function (value)
+{
+    return value === undefined;
+};
 
-    // Leave this part. We haven't learned this syntax yet, but
-    // this statement will print "The string is not equivalent to the number." if isEquivalent is False,
-    // "The string is equivalent to the number." if isEquivalent is True,
-    console.log("The string is " + (isEquivalent ? "" : "not")  + " equivalent to the number.")
-    return isEquivalent;
-}
+let null_predicate = function (value)
+{
+    return value === null;
+};
 
-//PART 2
-// Inputs: unreadCount is a positive integer Number, null, or undefined.
-function unreadAlert(unreadCount){
-    unreadCount && console.log("You have " + unreadCount + " messages.")
-}
+let check = function (predicate, value)
+{
+    return predicate(value);
+};
 
-// Inputs: unreadCount may be any type.
-function unreadAlertValidated(unreadCount){
-    typeof unreadCount === "number" && unreadCount > 0 && console.log("You have " + unreadCount + " messages.")
-}
+//TASK 2
+let getDictionary = function (lang)
+{
+    // The input to englishDictionary will be a number.
+    let englishDictionary = function (number)
+    {
+        switch (number)
+        {
+            case 1:
+                return "one";
+            case 2:
+                return "two";
+            case 3:
+                return "three";
+            default:
+                return "not included in dictionary";
+        }
+    };
 
-// Inputs: unreadCount is a String, Number, null, or undefined.
-function unreadAlertStringInput(unreadCount){
-    unreadCount != null && Number(unreadCount) > 0 && !Number.isNaN(Number(unreadCount)) && console.log("You have " + unreadCount + " messages.")
-}
+    // The input to frenchDictionary will be a number.
+    let frenchDictionary = function (number)
+    {
+        switch (number)
+        {
+            case 1:
+                return "un";
+            case 2:
+                return "deux";
+            case 3:
+                return "trois";
+            default:
+                return "not included in dictionary";
+        }
+    };
 
-// Inputs: score is a Number, null, or undefined.
-function showScore(score){
-    let correctedScore = score ?? "N/A";
+    // Accept any capitalization of the language.
+    if (lang.toLowerCase() === "e" || lang.toLowerCase() === "english")
+    {
+        return englishDictionary;
+    }
+    else
+    {
+        return frenchDictionary;
+    }
+};
 
-    console.log("The score is:" + score)
-    return correctedScore;
-}
 
-// Inputs: username is a String, including an empty string, or undefined.
-function printWelcomeMessage(username){
-    let userOrPlaceholder = username || "Mustang";
+// Test the English dictionary
+let english = getDictionary("English");
+console.log(english(1));
+console.log(english(4));
 
-    console.log("Welcome, " + userOrPlaceholder + "!")
-    return userOrPlaceholder;
-}
+// Test the French dictionary
+let french = getDictionary("FRENCH");
+console.log(french(2));
+console.log(french(5));
